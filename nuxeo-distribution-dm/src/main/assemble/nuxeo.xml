@@ -146,7 +146,7 @@
     <excludes>
 <!--      <artifact scope="test" />-->
       <artifact group="org.nuxeo.*" />
-<!--      <artifact name="jackrabbit-jcr-commons" />-->
+      <artifact name="jackrabbit-jcr-commons" />
       <artifact name="stax-api" />
       <artifact name="xercesImpl" />
       <artifact name="xmlParserAPIs" />
