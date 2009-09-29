@@ -90,7 +90,7 @@
       <version>${core.version}</version>
     </dependency>
     
-    <!-- stax needed by gf3 but only on java5 ... -->
+    <!-- TODO: JC stax needed by gf3 but only on java5 ... -->
     <dependency>
       <groupId>javax.xml.stream</groupId>
       <artifactId>stax-api</artifactId>
