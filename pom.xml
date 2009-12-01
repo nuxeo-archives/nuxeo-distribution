@@ -171,10 +171,6 @@
     </profile>
   </profiles>
   
-  <modules>
-    <module>nuxeo-distribution-tools</module>
-  </modules>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
