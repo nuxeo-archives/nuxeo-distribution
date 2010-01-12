@@ -133,7 +133,10 @@
       <artifact group="com.hp.hpl.jena" name="arq" />
       <artifact group="com.hp.hpl.jena" name="iri" />
       <artifact group="com.ibm.icu" name="icu4j" />
-      
+     
+      <artifact group="org.restlet" name="org.restlet" />
+      <artifact group="commons-jexl" name="commons-jexl" />
+ 
       <artifact group="rome" name="rome" />
       <artifact group="jdom" name="jdom" />
       
