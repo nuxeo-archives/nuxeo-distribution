@@ -21,6 +21,7 @@
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-actions-core"/>
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-audit-client"/>
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-commandline-executor"/>
+      <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-comment-web"/>
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-convert"/>
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-default-config"/>
       <artifact group="org.nuxeo.ecm.platform" name="nuxeo-platform-filemanager-api"/>
