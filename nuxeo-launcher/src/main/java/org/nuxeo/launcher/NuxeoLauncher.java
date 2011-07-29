@@ -594,7 +594,7 @@ public abstract class NuxeoLauncher {
             } else {
                 System.err.println(startSummary);
             }
-            return wasStartupFine();
+            return true;
         } else if (count == startMaxWait) {
             if (!quiet) {
                 System.out.println();
@@ -930,8 +930,7 @@ public abstract class NuxeoLauncher {
 
     /**
      * Return process status (running or not) as String, depending on OS
-     * capability to manage processes. Set status value following
-     * "http://refspecs.freestandards.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html"
+     * capability to manage processes. Set status value following"http://refspecs.freestandards.org/LSB_4.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptact.html"
      *
      * @see #status
      */
