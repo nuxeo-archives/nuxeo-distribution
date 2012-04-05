@@ -1,6 +1,10 @@
 <components xmlns="http://jboss.com/products/seam/components"
   xmlns:core="http://jboss.com/products/seam/core"
-  xmlns:mail="http://jboss.com/products/seam/mail">
+  xmlns:mail="http://jboss.com/products/seam/mail"
+  xmlns:cache="http://jboss.com/products/seam/cache">
+
+  <!-- Enable Seam Cache for use s:cache JSF component or Cache provider -->
+  %{EH_CACHE_PROVIDER}%
 
   <component name="org.jboss.seam.core.init">
     <property name="debug">false</property>
