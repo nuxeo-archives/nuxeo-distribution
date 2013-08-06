@@ -24,9 +24,9 @@
           <field type="largetext">post</field>
           <field type="largetext">mail:mail</field>
         </schema>
-<#if "${nuxeo.db.type}" == "postgresql">
         <indexing>
-          <fulltext analyzer="english">
+          <fulltext<#if nuxeo.vcs.fulltext?? && nuxeo.vcs.fulltext.analyzer??> analyzer="${nuxeo.vcs.fulltext.analyzer}"</#if>>
+<#if "${nuxeo.db.type}" == "postgresql">
             <index name="default">
               <!-- all props implied -->
             </index>
@@ -39,8 +39,6 @@
           </fulltext>
         </indexing>
 <#elseif "${nuxeo.db.type}" == "oracle">
-        <indexing>
-          <fulltext>
             <index name="default">
               <!-- all props implied -->
             </index>
@@ -60,8 +58,6 @@
           -->
         </indexing>
 <#elseif "${nuxeo.db.type}" == "mssql">
-        <indexing>
-          <fulltext analyzer="english">
             <index name="default">
               <!-- all props implied -->
             </index>
@@ -71,9 +67,6 @@
          </fulltext>
         </indexing>
 <#elseif "${nuxeo.db.type}" == "mysql">
-        <indexing>
-          <!-- For MySQL -->
-          <fulltext>
             <index name="default">
               <!-- all props implied -->
             </index>
@@ -86,9 +79,6 @@
           </fulltext>
         </indexing>
 <#else>
-        <indexing>
-          <!-- for H2 (Lucene Analyzer): -->
-          <fulltext analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer">
             <index name="default">
               <!-- all props implied -->
             </index>

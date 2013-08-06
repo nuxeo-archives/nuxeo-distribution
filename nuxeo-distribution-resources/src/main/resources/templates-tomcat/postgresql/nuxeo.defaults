@@ -12,3 +12,4 @@ nuxeo.db.jdbc.url=jdbc:postgresql://${nuxeo.db.host}:${nuxeo.db.port}/${nuxeo.db
 nuxeo.db.driver=org.postgresql.Driver
 nuxeo.db.xadatasource=org.postgresql.xa.PGXADataSource
 
+nuxeo.vcs.fulltext.analyzer=english
