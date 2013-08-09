@@ -12,3 +12,4 @@ nuxeo.db.jdbc.url=jdbc:jtds:sqlserver://${nuxeo.db.host}:${nuxeo.db.port}/${nuxe
 nuxeo.db.driver=net.sourceforge.jtds.jdbc.Driver
 nuxeo.db.xadatasource=net.sourceforge.jtds.jdbcx.JtdsDataSource
 
+nuxeo.vcs.fulltext.analyzer=english
