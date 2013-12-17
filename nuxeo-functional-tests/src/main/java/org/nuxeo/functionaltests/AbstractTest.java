@@ -135,6 +135,13 @@ public abstract class AbstractTest {
 
     public static final int POLLING_FREQUENCY_SECONDS = 1;
 
+    /**
+     * Poliing frequency in milliseconds to speed up tests
+     *
+     * @since 5.9.2
+     */
+    public static final int POLLING_FREQUENCY_MILLISECONDS = 10;
+
     private static final String FIREBUG_XPI = "firebug-1.6.2-fx.xpi";
 
     private static final String FIREBUG_VERSION = "1.6.2";
@@ -719,7 +726,7 @@ public abstract class AbstractTest {
             throws NoSuchElementException {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS).ignoring(
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS).ignoring(
                 NoSuchElementException.class);
         return wait.until(new Function<WebDriver, List<WebElement>>() {
             public List<WebElement> apply(WebDriver driver) {
@@ -737,7 +744,7 @@ public abstract class AbstractTest {
     public static WebElement waitUntilElementPresent(final By locator) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS).ignoring(
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS).ignoring(
                 NoSuchElementException.class);
         WebElement elt = wait.until(new Function<WebDriver, WebElement>() {
             public WebElement apply(WebDriver driver) {
@@ -755,7 +762,7 @@ public abstract class AbstractTest {
     public static void waitUntilElementNotPresent(final By locator) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS);
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS);
         wait.until((new Function<WebDriver, By>() {
             public By apply(WebDriver driver) {
                 try {
@@ -778,7 +785,7 @@ public abstract class AbstractTest {
     public static void waitForTextPresent(By locator, String text) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS);
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS);
         wait.until(ExpectedConditions.textToBePresentInElement(locator, text));
     }
 
@@ -791,7 +798,7 @@ public abstract class AbstractTest {
             final String text) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS);
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS);
         wait.until((new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 try {
@@ -812,7 +819,7 @@ public abstract class AbstractTest {
             final String text) {
         Wait<WebDriver> wait = new FluentWait<WebDriver>(driver).withTimeout(
                 LOAD_TIMEOUT_SECONDS, TimeUnit.SECONDS).pollingEvery(
-                POLLING_FREQUENCY_SECONDS, TimeUnit.SECONDS);
+                POLLING_FREQUENCY_MILLISECONDS, TimeUnit.MILLISECONDS);
         wait.until((new Function<WebDriver, Boolean>() {
             public Boolean apply(WebDriver driver) {
                 try {
