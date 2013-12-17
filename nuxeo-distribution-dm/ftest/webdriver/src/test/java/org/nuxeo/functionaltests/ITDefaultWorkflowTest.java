@@ -17,7 +17,6 @@
 package org.nuxeo.functionaltests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -74,8 +73,9 @@ public class ITDefaultWorkflowTest extends AbstractTest {
             usersTab = page.getUsersTab(true);
         }
         // search user
-        usersTab = usersTab.searchUser(username);
-        assertTrue(usersTab.isUserFound(username));
+        // the two following assertions could be skipped to speed up tests
+        // usersTab = usersTab.searchUser(username);
+        // assertTrue(usersTab.isUserFound(username));
         logout();
     }
 
@@ -84,8 +84,9 @@ public class ITDefaultWorkflowTest extends AbstractTest {
         UsersTabSubPage usersTab = page.getUsersTab();
         usersTab = usersTab.searchUser(username);
         usersTab = usersTab.viewUser(username).deleteUser();
-        usersTab = usersTab.searchUser(username);
-        assertFalse(usersTab.isUserFound(username));
+        // the two following assertions could be skipped to speed up tests
+        // usersTab = usersTab.searchUser(username);
+        // assertFalse(usersTab.isUserFound(username));
         logout();
     }
 
