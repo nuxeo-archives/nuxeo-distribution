@@ -43,8 +43,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-// NXP-15177: failing randomly
-@Ignore
 public class ITWizardAndUpdateCenterTests extends AbstractTest {
 
     private static final String MARKETPLACE_PACKAGE_ID = "audit-web-access-1.0.6";
