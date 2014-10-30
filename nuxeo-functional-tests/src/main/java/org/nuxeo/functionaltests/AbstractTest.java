@@ -25,6 +25,7 @@ package org.nuxeo.functionaltests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.io.IOException;
@@ -50,6 +51,20 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.MethodRule;
+import org.nuxeo.common.utils.FileUtils;
+import org.nuxeo.functionaltests.fragment.WebFragment;
+import org.nuxeo.functionaltests.pages.AbstractPage;
+import org.nuxeo.functionaltests.pages.DocumentBasePage;
+import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
+import org.nuxeo.functionaltests.pages.FileDocumentBasePage;
+import org.nuxeo.functionaltests.pages.LoginPage;
+import org.nuxeo.functionaltests.pages.NoteDocumentBasePage;
+import org.nuxeo.functionaltests.pages.forms.CollectionCreationFormPage;
+import org.nuxeo.functionaltests.pages.forms.DublinCoreCreationDocumentFormPage;
+import org.nuxeo.functionaltests.pages.forms.FileCreationFormPage;
+import org.nuxeo.functionaltests.pages.forms.NoteCreationFormPage;
+import org.nuxeo.functionaltests.pages.forms.WorkspaceFormPage;
+import org.nuxeo.functionaltests.pages.tabs.CollectionContentTabSubPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -69,21 +84,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
-
-import org.nuxeo.common.utils.FileUtils;
-import org.nuxeo.functionaltests.fragment.WebFragment;
-import org.nuxeo.functionaltests.pages.AbstractPage;
-import org.nuxeo.functionaltests.pages.DocumentBasePage;
-import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
-import org.nuxeo.functionaltests.pages.FileDocumentBasePage;
-import org.nuxeo.functionaltests.pages.LoginPage;
-import org.nuxeo.functionaltests.pages.NoteDocumentBasePage;
-import org.nuxeo.functionaltests.pages.forms.CollectionCreationFormPage;
-import org.nuxeo.functionaltests.pages.forms.DublinCoreCreationDocumentFormPage;
-import org.nuxeo.functionaltests.pages.forms.FileCreationFormPage;
-import org.nuxeo.functionaltests.pages.forms.NoteCreationFormPage;
-import org.nuxeo.functionaltests.pages.forms.WorkspaceFormPage;
-import org.nuxeo.functionaltests.pages.tabs.CollectionContentTabSubPage;
 
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableMap;
@@ -844,6 +844,15 @@ public abstract class AbstractTest {
 
         // Delete the Workspace
         workspacesPage.getContentTab().removeDocument(workspaceTitle);
+
+        try {
+            driver.findElement(By.linkText(workspaceTitle));
+            fail(String.format("Deletion of '%s' workspace failed",
+                    workspaceTitle));
+        } catch (NoSuchElementException e) {
+            // expected behavior
+        }
+
     }
 
     /**
