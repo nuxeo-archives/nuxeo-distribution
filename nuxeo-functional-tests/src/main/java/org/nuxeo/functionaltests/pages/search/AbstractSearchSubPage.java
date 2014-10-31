@@ -44,4 +44,9 @@ public abstract class AbstractSearchSubPage extends AbstractPage {
         return asPage(SearchPage.class);
     }
 
+    public SearchPage clear() {
+        clearButton.click();
+        return asPage(SearchPage.class);
+    }
+
 }

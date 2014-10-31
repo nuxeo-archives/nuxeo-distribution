@@ -18,6 +18,7 @@ package org.nuxeo.ftest.cap;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.nuxeo.ftest.cap.ITTaggingTest.SELECT2_TAG_ELT_ID;
 
 import java.io.IOException;
 import java.util.Date;
@@ -27,6 +28,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.nuxeo.functionaltests.AbstractTest;
+import org.nuxeo.functionaltests.AjaxRequestManager;
+import org.nuxeo.functionaltests.Locator;
 import org.nuxeo.functionaltests.forms.Select2WidgetElement;
 import org.nuxeo.functionaltests.pages.DocumentBasePage;
 import org.nuxeo.functionaltests.pages.DocumentBasePage.UserNotConnectedException;
@@ -57,6 +60,10 @@ public class ITSearchTabTest extends AbstractTest {
     public final static String[] SUBJECTS = { "Comics", "Religion", "Education" };
 
     public final static String COVERAGE = "France";
+
+    public final static String TAG_NAME = "atag";
+
+    public final static String NOT_EXISTING_FULL_TEXT = "textNotExistingInAnyDocument";
 
     @Before
     public void setup() throws UserNotConnectedException, IOException {
@@ -116,6 +123,16 @@ public class ITSearchTabTest extends AbstractTest {
                     false);
             coverageWidget.selectValue(COVERAGE);
             editTabSubPage.save();
+
+            // add a tag
+            Select2WidgetElement tagWidget = new Select2WidgetElement(driver,
+                    Locator.findElementWithTimeout(By.id(SELECT2_TAG_ELT_ID)),
+                    true);
+            assertTrue(tagWidget.getSelectedValues().isEmpty());
+            AjaxRequestManager a = new AjaxRequestManager(driver);
+            a.watchAjaxRequests();
+            tagWidget.selectValue(TAG_NAME);
+            a.waitForAjaxRequests();
         }
     }
 
@@ -128,7 +145,32 @@ public class ITSearchTabTest extends AbstractTest {
         assertTrue(nbCurrentDoc > 1);
         DefaultSearchSubPage searchLayoutSubPage = searchPage.getDefaultSearch();
 
+        // test full text
+        searchLayoutSubPage.setFullText(NOT_EXISTING_FULL_TEXT);
+        searchPage = searchLayoutSubPage.filter();
+        resultPanelSubPage = searchPage.getSearchResultsSubPage();
+        assertEquals(0, resultPanelSubPage.getNumberOfDocumentInCurrentPage());
+        searchPage = searchLayoutSubPage.clear();
+        searchLayoutSubPage = searchPage.getDefaultSearch();
+        searchLayoutSubPage.setFullText(WORKSPACE1_TITLE);
+        searchPage = searchLayoutSubPage.filter();
+        resultPanelSubPage = searchPage.getSearchResultsSubPage();
+        assertEquals(1, resultPanelSubPage.getNumberOfDocumentInCurrentPage());
+
+        // tag search
+        searchPage = searchLayoutSubPage.clear();
+        searchLayoutSubPage = searchPage.getDefaultSearch();
+        resultPanelSubPage = searchPage.getSearchResultsSubPage();
+        assertTrue(resultPanelSubPage.getNumberOfDocumentInCurrentPage() > 1);
+        searchLayoutSubPage.selectTag(TAG_NAME);
+        searchPage = searchLayoutSubPage.filter();
+        resultPanelSubPage = searchPage.getSearchResultsSubPage();
+        assertEquals(1, resultPanelSubPage.getNumberOfDocumentInCurrentPage());
+
         // Test aggregates
+        searchPage = searchLayoutSubPage.clear();
+        searchLayoutSubPage = searchPage.getDefaultSearch();
+        resultPanelSubPage = searchPage.getSearchResultsSubPage();
         Map<String, Integer> coverageAgg = searchLayoutSubPage.getAvailableCoverageAggregate();
         assertEquals(1, coverageAgg.size());
         assertEquals(new Integer(1), coverageAgg.get(COVERAGE));
@@ -146,7 +188,6 @@ public class ITSearchTabTest extends AbstractTest {
                 resultPanelSubPage.getNumberOfDocumentInCurrentPage());
 
         // Test select path widget
-        resultPanelSubPage = searchPage.getSearchResultsSubPage();
         searchLayoutSubPage = searchPage.getDefaultSearch();
         searchLayoutSubPage.selectPath(SEARCH_PATH);
         searchPage = searchLayoutSubPage.filter();

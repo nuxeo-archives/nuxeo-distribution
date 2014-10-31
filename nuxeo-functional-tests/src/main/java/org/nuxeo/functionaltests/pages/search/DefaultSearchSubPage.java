@@ -21,6 +21,7 @@ import java.util.Map;
 import org.nuxeo.functionaltests.AjaxRequestManager;
 import org.nuxeo.functionaltests.Locator;
 import org.nuxeo.functionaltests.Required;
+import org.nuxeo.functionaltests.forms.Select2WidgetElement;
 import org.nuxeo.functionaltests.pages.search.aggregates.CheckBoxAggregateElements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -35,7 +36,12 @@ import com.google.common.base.Function;
  */
 public class DefaultSearchSubPage extends AbstractSearchSubPage {
 
+    public final static String SELECT2_TAG_ELT_ID = "s2id_nxl_gridSearchLayout:nxw_searchLayout_form:nxl_default_search_layout:nxw_tags_select2";
+
     public static final String TREE_PATH_ID = "nxl_gridSearchLayout:nxw_searchLayout_form:nxl_default_search_layout:nxw_ecm_path_treeId";
+
+    @FindBy(id = "nxl_gridSearchLayout:nxw_searchLayout_form:nxl_default_search_layout:nxw_ecm_fulltext")
+    protected WebElement textInput;
 
     @FindBy(id = "nxl_gridSearchLayout:nxw_searchLayout_form:nxl_default_search_layout:nxw_dc_coverage_agg")
     protected WebElement coverageAggregate;
@@ -66,6 +72,16 @@ public class DefaultSearchSubPage extends AbstractSearchSubPage {
 
     public DefaultSearchSubPage(WebDriver driver) {
         super(driver);
+    }
+
+    public void setFullText(String fullText) {
+        textInput.sendKeys(fullText);
+    }
+
+    public void selectTag(String tag) {
+        Select2WidgetElement tagWidget = new Select2WidgetElement(driver,
+                Locator.findElementWithTimeout(By.id(SELECT2_TAG_ELT_ID)), true);
+        tagWidget.selectValue(tag);
     }
 
     public Map<String, Integer> getAvailableCoverageAggregate() {
